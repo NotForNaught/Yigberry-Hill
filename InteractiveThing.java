@@ -4,6 +4,13 @@ public class InteractiveThing {
 	
 	private int x;
 	private int y;
+	private String message;
+
+	public InteractiveThing(int x, int y, String message) {
+		this.x = x;
+		this.y = y;
+		this.message = message;
+	}
 
 	public int getX() {
 		return x;
@@ -12,9 +19,9 @@ public class InteractiveThing {
 	public int getY() {
 		return y;
 	}
-	
-	public boolean isClose(int xx, int yy) {
-		
-		return false;
-	}
+
+	public String getMessage() {
+		return message;
+	}	
+
 }
