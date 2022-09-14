@@ -7,8 +7,6 @@ public class YigberryHillKeyListener implements KeyListener {
 
 	private Input input;
 	private boolean on = false;
-	BackgroundSprite isText = new BackgroundSprite();
-	Main main = new Main();
 	
 	public YigberryHillKeyListener(Input input) {
 		this.input = input;
@@ -16,12 +14,8 @@ public class YigberryHillKeyListener implements KeyListener {
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (e.getKeyChar() == ' ' && !on && main.distance(isText.getX(), -130, isText.getY(), -448) <= 477) {
+		if (e.getKeyChar() == ' ') {
 			input.setSpacebar(true);
-			on = true;
-		} else if (e.getKeyChar() == ' ' && on) {
-			input.setSpacebar(false);
-			on = false;
 		}
 	}
 
@@ -29,26 +23,28 @@ public class YigberryHillKeyListener implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_W) {
+		int c = e.getKeyCode();
+		if(c == KeyEvent.VK_W || c == KeyEvent.VK_UP) {
 			input.setUp(true);
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+		} else if (c == KeyEvent.VK_S || c == KeyEvent.VK_DOWN) {
 			input.setDown(true);
-		} else if (e.getKeyCode() == KeyEvent.VK_A) {
+		} else if (c == KeyEvent.VK_A || c == KeyEvent.VK_LEFT) {
 			input.setLeft(true);
-		} else if (e.getKeyCode() == KeyEvent.VK_D) {
+		} else if (c == KeyEvent.VK_D || c == KeyEvent.VK_RIGHT) {
 			input.setRight(true);
 		} 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_W) {
+                int c = e.getKeyCode();
+		if(c == KeyEvent.VK_W || c == KeyEvent.VK_UP) {
 			input.setUp(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+		} else if (c == KeyEvent.VK_S || c == KeyEvent.VK_DOWN) {
 			input.setDown(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_A) {
+		} else if (c == KeyEvent.VK_A || c == KeyEvent.VK_LEFT) {
 			input.setLeft(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_D) {
+		} else if (c == KeyEvent.VK_D || c == KeyEvent.VK_RIGHT) {
 			input.setRight(false);
 		} 
 	}
