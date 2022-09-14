@@ -15,9 +15,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 public class Main {
+
+	private static int MIN_INTERACTIVE_DISTANCE = 150;
+
 	public static void main(String[] args) throws FontFormatException, IOException, LineUnavailableException, UnsupportedAudioFileException {
 		Input input = new Input();
 		List<Sprite> sprites = new ArrayList<Sprite>();
+		List<InteractiveThing> things = getInteractiveThings();
 		BackgroundSprite background = new BackgroundSprite();
 		sprites.add(background);
 		MainSprite main = new MainSprite();
@@ -58,8 +62,21 @@ public class Main {
 				}
 				
 				// handle input
+
 				background.update(input);
-				textbox.update(input, panel);
+
+				if (input.isSpacebar()) {
+					int cx = background.getCharacterLocationX();
+					int cy = background.getCharacterLocationY();
+
+					InteractiveThing thing = getClosestUsableInteractiveThing(things, cx, cy);
+					if (thing != null) {
+						textbox.updateText(thing.getMessage());
+					}
+				}
+				// if we set this to false, we reset if somebody pushed spacebar every iteration
+				input.setSpacebar(false);
+
 				main.update(input);
 				
 				// update world
@@ -86,9 +103,30 @@ public class Main {
 		return r1.intersects(new Rectangle(x2, y2, w2, h2));
 	}
 
-	public int distance(int x1, int x2, int y1, int y2) {
+	public static int distance(int x1, int y1, int x2, int y2) {
 		double tosqrt = Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2);
 		return (int) Math.sqrt(tosqrt);
 	}
-	
+
+	public static List<InteractiveThing> getInteractiveThings() {
+		List<InteractiveThing> things = new ArrayList<InteractiveThing>();
+		things.add(new InteractiveThing(410, 573, "This is a mailbox."));
+		return things;
+	}
+
+	public static InteractiveThing getClosestUsableInteractiveThing(List<InteractiveThing> things, int x, int y) {
+		InteractiveThing result = null;
+		int shortestDistance = Integer.MAX_VALUE;
+		for (InteractiveThing thing : things) {
+			int d = Main.distance(thing.getX(), thing.getY(), x, y);
+			System.out.println("Spacebar pushed, distance is " + d);
+			System.out.println("Thing is at " + thing.getX() + ", " + thing.getY());
+			System.out.println("Character is at " + x + ", " + y);
+			if (d < MIN_INTERACTIVE_DISTANCE && d < shortestDistance) {
+				result = thing;
+				shortestDistance = d;
+			}	
+		}
+		return result;
+	}
 }
