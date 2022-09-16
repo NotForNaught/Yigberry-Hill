@@ -4,12 +4,14 @@ public class InteractiveThing {
 	
 	private int x;
 	private int y;
-	private String message;
+	private String messageline1;
+	private String messageline2;
 
-	public InteractiveThing(int x, int y, String message) {
+	public InteractiveThing(int x, int y, String messageline1, String messageline2) {
 		this.x = x;
 		this.y = y;
-		this.message = message;
+		this.messageline1 = messageline1;
+		this.messageline2 = messageline2;
 	}
 
 	public int getX() {
@@ -20,8 +22,12 @@ public class InteractiveThing {
 		return y;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getMessageline1() {
+		return messageline1;
 	}	
+	
+	public String getMessageline2() {
+		return messageline2;
+	}
 
 }

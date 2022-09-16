@@ -18,7 +18,7 @@ public class Main {
 
 	private static int MIN_INTERACTIVE_DISTANCE = 150;
 
-	public static void main(String[] args) throws FontFormatException, IOException, LineUnavailableException, UnsupportedAudioFileException {
+	public static void main(String[] args) throws FontFormatException, IOException, LineUnavailableException, UnsupportedAudioFileException, InterruptedException {
 		Input input = new Input();
 		List<Sprite> sprites = new ArrayList<Sprite>();
 		List<InteractiveThing> things = getInteractiveThings();
@@ -71,7 +71,7 @@ public class Main {
 
 					InteractiveThing thing = getClosestUsableInteractiveThing(things, cx, cy);
 					if (thing != null) {
-						textbox.updateText(thing.getMessage());
+						textbox.updateText(thing.getMessageline1(), thing.getMessageline2());
 					}
 				}
 				// if we set this to false, we reset if somebody pushed spacebar every iteration
@@ -110,7 +110,8 @@ public class Main {
 
 	public static List<InteractiveThing> getInteractiveThings() {
 		List<InteractiveThing> things = new ArrayList<InteractiveThing>();
-		things.add(new InteractiveThing(410, 573, "This is a mailbox."));
+		things.add(new InteractiveThing(500, 573, "You interacted with", "the mailbox."));
+		things.add(new InteractiveThing(373, 548, "You interacted with", "the door."));
 		return things;
 	}
 
@@ -121,9 +122,9 @@ public class Main {
 			int d = Main.distance(thing.getX(), thing.getY(), x, y);
 			System.out.println("Spacebar pushed, distance is " + d);
 			System.out.println("Thing is at " + thing.getX() + ", " + thing.getY());
-			System.out.println("Character is at " + x + ", " + y);
-			if (d < MIN_INTERACTIVE_DISTANCE && d < shortestDistance) {
-				result = thing;
+			System.out.println("Character is at " + x + ", " + y); 
+			if (d < MIN_INTERACTIVE_DISTANCE && d < shortestDistance) { 
+				result = thing; 
 				shortestDistance = d;
 			}	
 		}
